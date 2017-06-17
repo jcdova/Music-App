@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>DJ's Stream Dream - Login</title>
+
+	
+	<!-- <link rel="stylesheet" href="css/style.css"/> -->
+
+	<style>
+
+	h2{
+	text-align: center;
+	font-size: 24px;
+	}
+
+	hr{
+	margin-bottom: 30px;
+	}
+
+	div.container{
+		width: 1280px;
+		height:740px;
+		margin: 0 auto;
+		font-family: 'Arial', serif;
+		background-color: black;
+		background-image: url('dj1.gif');
+		background-position: 50% 50%;
+		background-repeat: repeat-x;
+		
+	}
+
+	div.main{
+		width: 320px;
+		margin: 0 auto;
+		padding: 10px 55px 40px;
+		background-color: #638CA6;
+		background-image: url(Titanium.jpg);
+		border-top: 10px solid #DB2828;
+		border-bottom: 10px solid white;
+		border-left: 10px solid white;
+		border-right: 10px solid white;
+		box-shadow: 0 0 10px;
+		border-radius: 2px;
+		font-size: 13px;
+	}
+
+	input[type=text],[type=password] {
+		width: 97.7%;
+		height: 34px;
+		padding-left: 5px;
+		margin-bottom: 20px;
+		margin-top: 8px;
+		box-shadow: 0 0 5px #010304;
+		border: 2px solid #010304;
+		color: #4f4f4f;
+		font-size: 16px;
+	}
+
+	label{
+		color: #464646;
+		text-shadow: 0 1px 0 #fff;
+		font-size: 14px;
+		font-weight: bold;
+	}
+
+	#login {
+		width: 100%;
+		background: linear-gradient(#22abe9 5%, #010304 100%);
+		border: 1px solid #0F799E;
+		font-size: 20px;
+		margin-top: 15px;
+		padding: 8px;
+		font-weight: bold;
+		cursor: pointer;
+		color: white;
+		text-shadow: 0px 1px 0px #13506D;
+	}
+
+	#login:hover{
+	background: linear-gradient(#36caf0 5%, #22abe9 100%);
+	}
+
+	</style>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<!-- <script type="text/javascript" src="login.js"></script> -->
+</head>
+<body>
+
+<div class="container">
+	<div class="main">
+		<form class="form" method="post" action="#">
+		<h2>DJ's Stream Dream - Login</h2>
+			<div>			
+				<input type="text" placeholder="Enter Username" id="UserId">
+				<input type="text" placeholder="Enter Password" id="passWord">
+				<button id="login">Login</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+	
+var checkUser = "";
+var checkPassword = "";
+
+$("#login").on("click", function() {
+	event.preventDefault();
+
+	checkUser = $("#UserId").val().trim();
+	checkPassword = $("#passWord").val().trim();
+
+// console.log(checkUser);
+// console.log(checkPassword);
+
+	if (checkUser === "dj jorge" && checkPassword === "mix" ||
+		checkUser === "dj daniel" && checkPassword === "mix" ||
+		checkUser === "dj travis" && checkPassword === "mix") {
+		
+		window.open('index.html');
+		// window.open("https://www.youtube.com/watch?v=l-O5IHVhWj0", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+
+	} else {
+	alert("Incorrect username or password, Please try again")
+	}
+});
+
+</script>
+
+
+
+
+</body>
+</html>
