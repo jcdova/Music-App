@@ -12,7 +12,7 @@
 var database = firebase.database();
 
 
-//Display Previously Downloaded Songs From Firebase
+//Display Previously Downloaded Songs From Firebase album
 $(document).ready(function() {
 
  	database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
@@ -46,11 +46,13 @@ $("#submitBtn").on("click", function(event) {
     // runs the song or artist search option picked
 	if ($("#artistOrSong option")[0]['selected'] === true) {
 
-		$("#displayArtist").prepend(searchKeyword.charAt(0).toUpperCase() + searchKeyword.substr(1) +"'s Top 10 Songs");
+		// $("#displayArtist").prepend(searchKeyword.charAt(0).toUpperCase() + searchKeyword.substr(1) +"'s Top 10 Songs");
+		$("#displayArtist").prepend("Top 20 Search Results for: " + searchKeyword.charAt(0).toUpperCase() + searchKeyword.substr(1));
 
 		//assin API url to variable
-		var queryUrl = "http://api.musicgraph.com/api/v2/track/search?api_key=6ec87e6f89ee9f0aee16c1f99c37e328&artist_name=" + finalKeyword + "&limit=10";
-		
+		//var queryUrl = "http://api.musicgraph.com/api/v2/track/search?api_key=6ec87e6f89ee9f0aee16c1f99c37e328&artist_name=" + finalKeyword + "&limit=10";
+		var queryUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&order=viewCount&q=" + finalKeyword + "&type=video&key=AIzaSyCFoyJ6giAFWoS3L2ktA6cCeqUPoVaBJS0";
+
 		$.ajax({
 			url: queryUrl,
 			method: "GET"
@@ -61,18 +63,21 @@ $("#submitBtn").on("click", function(event) {
 			//Initializing the variables with empty arrays 
 			var song = [];
 			var tubeId = [];
-			var album = [];
+			var artist = [];
 
 			//Pull values from JSON API and add to array
-			for (var i = 0; i <= 9; i++) {
-				song.push(response.data[i].title);
-				tubeId.push(response.data[i].track_youtube_id); 
-				album.push(response.data[i].album_title);
+			for (var i = 0; i <= 19; i++) {
+				//song.push(response.data[i].title);
+				song.push(response.items[i].snippet.title);
+				// tubeId.push(response.data[i].track_youtube_id); 
+				tubeId.push(response.items[i].id.videoId);
+				//artist.push(response.data[i].artist_name);
+				artist.push(searchKeyword.charAt(0).toUpperCase() + searchKeyword.substr(1));
 
 				//Display table with values from JSON API
 				$("#displayTable").append(
 					"<tr><td>" + song[i] +
-					"</td><td>" + album[i] +
+					"</td><td>" + artist[i] +
 					"</td><td class='center aligned'>" + "<a href='http://www.youtube.com/watch?v=" + tubeId[i] + "?autoplay=1&showinfo=0&controls=0' frameborder='0' target='_blank' class='js-newWindow' data-popup='toolbar=no,scrollbars=yes,resizable=yes,top=70,left=400,width=440,height=300'><input id='videoId' type='image' src='playbutton.png' width='20%'></a>" +
 					"</td><td class='center aligned'>" + "<button id='downloadBtn' value='" + song[i] + "' class='ui blue button' style='background: linear-gradient(#22abe9 5%, #010304 100%)'></button>" +
 					"</td></tr>"
@@ -121,11 +126,12 @@ $("#submitBtn").on("click", function(event) {
 		});
 	} else {
 		//dispays when the song search option is chosen
-		$("#displayArtist").prepend("Song Results:");
+		//$("#displayArtist").prepend("Song Results:");
+		$("#displayArtist").prepend("Top 20 Search Results for: " + searchKeyword.charAt(0).toUpperCase() + searchKeyword.substr(1));
 
 		//assin API url to variable
-		var queryUrl = "http://api.musicgraph.com/api/v2/track/search?api_key=6ec87e6f89ee9f0aee16c1f99c37e328&title=" + finalKeyword + "&limit=8";
-
+		// var queryUrl = "http://api.musicgraph.com/api/v2/track/search?api_key=6ec87e6f89ee9f0aee16c1f99c37e328&title=" + finalKeyword + "&limit=8";
+		var queryUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&order=viewCount&q=" + finalKeyword + "&type=video&key=AIzaSyCFoyJ6giAFWoS3L2ktA6cCeqUPoVaBJS0";
 		$.ajax({
 			url: queryUrl,
 			method: "GET"
@@ -136,20 +142,24 @@ $("#submitBtn").on("click", function(event) {
 			//Initializing the variables with empty arrays 
 			var song = [];
 			var tubeId = [];
-			var album = [];
+			var artist = [];
 
 			//Pull values from JSON API and add to array
-			for (var y = 0; y <= 7; y++) {
-				song.push(response.data[y].title);
-				tubeId.push(response.data[y].track_youtube_id); 
-				album.push(response.data[y].album_title);
-
-				var searchKeyword = response.data[0].artist_name;
+			for (var y = 0; y <= 19; y++) {
+				// song.push(response.data[y].title);
+				song.push(response.items[y].snippet.title);
+				// tubeId.push(response.data[y].track_youtube_id);
+				tubeId.push(response.items[y].id.videoId);
+				// artist.push(response.data[y].artist_name);
+				artist.push(searchKeyword.charAt(0).toUpperCase() + searchKeyword.substr(1));
+				
+				// var searchKeyword = response.data[0].artist_name;
+				// var searchKeyword = response.data[0].artist_name;
 
 				//Display table with values from JSON API
 				$("#displayTable").append(
 					"<tr><td>" + song[y] +
-					"</td><td>" + album[y] +
+					"</td><td>" + artist[y] +
 					"</td><td class='center aligned'>" + "<a href='http://www.youtube.com/watch?v=" + tubeId[y] + "?autoplay=1&showinfo=0&controls=0' frameborder='0' target='_blank' class='js-newWindow' data-popup='toolbar=no,scrollbars=yes,resizable=yes,top=70,left=400,width=440,height=300'><input id='videoId' type='image' src='playbutton.png' width='20%'></a>" +
 					"</td><td class='center aligned'>" + "<button id='downloadBtn' value='" + song[y] + "' class='ui blue button' style='background: linear-gradient(#22abe9 5%, #010304 100%)'></button>" +
 					"</td></tr>"
