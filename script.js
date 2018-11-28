@@ -52,6 +52,7 @@ $("#submitBtn").on("click", function(event) {
 		//assin API url to variable
 		//var queryUrl = "http://api.musicgraph.com/api/v2/track/search?api_key=6ec87e6f89ee9f0aee16c1f99c37e328&artist_name=" + finalKeyword + "&limit=10";
 		var queryUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&order=viewCount&q=" + finalKeyword + "&type=video&key=AIzaSyCFoyJ6giAFWoS3L2ktA6cCeqUPoVaBJS0";
+		
 
 		$.ajax({
 			url: queryUrl,
@@ -103,7 +104,8 @@ $("#submitBtn").on("click", function(event) {
 
 				//Creates download button for each song entry
 				var t = $("<a>");
-		    	t.attr("href","javascript:convert2mp3('" + tubeId[i] + "')");
+		    	//t.attr("href","javascript:convert2mp3('" + tubeId[i] + "')");
+		    	t.attr("href","https://www.download-mp3-youtube.com/api/?api_key=MjEzMTQzNzEy&format=mp3&video_id=" + tubeId[i]);
 		    	t.css("color", "white");
 		    	t.text("Download Song");
 		    	$("#downloadBtn" + [i]).html(t);
@@ -184,9 +186,10 @@ $("#submitBtn").on("click", function(event) {
 
 				//Creates download button for each song entry
 				var u = $("<a>");
-		    	u.attr("href","javascript:convert2mp3('" + tubeId[y] + "')");
-		    	u.css("color", "white");
+		    	// u.attr("href","javascript:convert2mp3('" + tubeId[y] + "')");
+		        u.attr("href","https://www.download-mp3-youtube.com/api/?api_key=MjEzMTQzNzEy&format=mp3&video_id=" + tubeId[i]);
 		    	u.text("Download Song");
+		    	u.css("color", "white");
 		    	$("#downloadBtn" + [y]).html(u);
 
 				//firebase code
